@@ -36,8 +36,8 @@ while no_of_pagedowns:
     time.sleep(0.2)
     no_of_pagedowns-=1
 
-post_elems = browser.find_elements_by_class_name("photo-item__img")
+post_elems = browser.find_elements_by_class_name("photo-item")
 
 for post in post_elems:
-    url = post.get_attribute("src")
+    url = "https://www.pexels.com/photo/{}/download".format(post.get_attribute("data-photo-modal-medium-id"))
     download_image(url)
