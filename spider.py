@@ -8,8 +8,8 @@ import urllib
 
 keyword = 'dog'
 url = "https://www.pexels.com/search/" + keyword 
-def download_image(image_url):
-    with open('./_images/'+ str(uuid.uuid1()) + '.jpeg', 'wb') as handle:
+def download_image(image_url, image_id):
+    with open('./_images/{}.jpeg'.format(image_id), 'wb') as handle:
             response = requests.get(image_url, stream=True)
 
             if not response.ok:
@@ -36,8 +36,9 @@ while no_of_pagedowns:
     time.sleep(0.2)
     no_of_pagedowns-=1
 
-post_elems = browser.find_elements_by_class_name("photo-item__img")
+post_elems = browser.find_elements_by_class_name("photo-item")
 
 for post in post_elems:
-    url = post.get_attribute("src")
-    download_image(url)
+    id = post.get_attribute("data-photo-modal-medium-id")
+    url = "https://www.pexels.com/photo/{}/download".format(id)
+    download_image(url, id)
